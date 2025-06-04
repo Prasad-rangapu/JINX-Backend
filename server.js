@@ -15,7 +15,7 @@ const app = express();
 // Middleware
 app.use(logger('dev'));
 app.use(cors({
-  origin: ['http://localhost:3000','http://127.0.0.1:5500','https://jinx-yapt.onrender.com','https://prasad-rangapu.github.io'],
+  origin: ['https://jinx-yapt.onrender.com','https://prasad-rangapu.github.io'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
