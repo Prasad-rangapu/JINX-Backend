@@ -11,7 +11,7 @@ const contactRoutes = require('./routes/contact');
 // const profileRoutes = require('./routes/profile.routes');
 
 const app = express();
-
+app.set("trust proxy", 1);
 // Middleware
 app.use(logger('dev'));
 app.use(cors({
