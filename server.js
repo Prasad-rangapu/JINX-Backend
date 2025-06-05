@@ -11,13 +11,12 @@ const contactRoutes = require('./routes/contact');
 // const profileRoutes = require('./routes/profile.routes');
 
 const app = express();
-app.set("trust proxy", 1);
+
 // Middleware
 app.use(logger('dev'));
 app.use(cors({
-  origin: ['https://prasad-rangapu.github.io'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
+  origin: 'https://prasad-rangapu.github.io',
+  credentials: true, // if you use cookies/auth
 }));
 
 app.use(express.json());
@@ -34,6 +33,8 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }));
+
+app.set('trust proxy', 1);
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
