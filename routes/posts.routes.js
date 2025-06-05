@@ -36,8 +36,8 @@ router.get('/:id', async (req, res) => {
 // Create new post
 router.post('/', authenticateJWT, async (req, res) => {
   // Now req.user is available
-  const { title, description } = req.body;
-  const id = req.user.id;
+  const { id,title, description } = req.body;
+  
 
   await db.query(
     'INSERT INTO posts (user_id, title, content, likes) VALUES (?, ?, ?, ?)',
