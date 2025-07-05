@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node server",
-    "dev": "node --watch --env-file=.env  server"
+    "start": "node server.js",
+    "dev": "node --watch --env-file=.env server.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
