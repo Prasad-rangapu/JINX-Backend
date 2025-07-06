@@ -166,6 +166,29 @@ router.get('/check-auth', authenticateJWT, (req, res) => {
     res.json({ isAuthenticated: false });
   }
 });
+router.post('/checklogin', authenticateJWT, (req, res) => {
+  const email = req.body.email;
+
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required' });
+  }
+
+  // Check if the user exists in the database
+  pool.query('SELECT * FROM users WHERE email = ?', [email], (error, results) => {
+    if (error) {
+      console.error('Database query error:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+
+    if (results.length > 0) {
+      // User found
+      res.json({ isUserFound: true, user: results[0] });
+    } else {
+      // User not found
+      res.json({ isUserFound: false });
+    }
+  });
+});
 
 module.exports = {
   router,
