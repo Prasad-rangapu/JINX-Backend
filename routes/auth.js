@@ -166,7 +166,7 @@ router.get('/check-auth', authenticateJWT, (req, res) => {
     res.json({ isAuthenticated: false });
   }
 });
-router.post('/checklogin', authenticateJWT, (req, res) => {
+router.post('/checklogin',(req, res) => {
   const email = req.body.email;
 
   if (!email) {
