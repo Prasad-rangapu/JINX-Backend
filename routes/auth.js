@@ -182,7 +182,7 @@ router.post('/checklogin', async (req, res) => {
     );
 
     if (rows.length) {
-      return res.json({ ok: true, isUserFound: true, user: rows[0] });
+      return res.json({ ok: true, isUserFound: true });
     }
 
     return res.json({ ok: true, isUserFound: false });
