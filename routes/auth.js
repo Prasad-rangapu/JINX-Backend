@@ -166,28 +166,33 @@ router.get('/check-auth', authenticateJWT, (req, res) => {
     res.json({ isAuthenticated: false });
   }
 });
-router.post('/checklogin',(req, res) => {
-  const email = req.body.email;
+
+
+router.post('/checklogin', async (req, res) => {
+  const { email } = req.body ?? {};
 
   if (!email) {
-    return res.status(400).json({ error: 'Email is required' });
+    return res.status(400).json({ ok: false, message: 'Email is required' });
   }
 
-  // Check if the user exists in the database
-  pool.query('SELECT * FROM users WHERE email = ?', [email], (error, results) => {
-    if (error) {
-      console.error('Database query error:', error);
-      return res.status(500).json({ error: 'Internal server error' });
+  try {
+    // param‑placeholder is safe against SQL‑i
+    const [rows] = await pool.query(
+      'SELECT * FROM users WHERE email = ? LIMIT 1',
+      [email]
+    );
+
+    if (rows.length) {
+      return res.json({ ok: true, isUserFound: true, user: rows[0] });
     }
 
-    if (results.length > 0) {
-      // User found
-      res.json({ isUserFound: true, user: results[0] });
-    } else {
-      // User not found
-      res.json({ isUserFound: false });
-    }
-  });
+    return res.json({ ok: true, isUserFound: false });
+  } catch (err) {
+    console.error('Database error:', err);
+    return res
+      .status(500)
+      .json({ ok: false, message: 'Internal server error' });
+  }
 });
 
 module.exports = {
