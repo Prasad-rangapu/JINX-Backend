@@ -67,7 +67,7 @@ router.post(`/:postId/like`, async (req, res) => {
     const [post] = await db.query(
       'select * from posts where id=?',
       [postId]);
-    res.status(201).json(post[0],isliked='true');
+    res.status(201).json(post[0]);
   }
   else{
     await db.query(
